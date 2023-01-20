@@ -7,7 +7,28 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="pig_latin.js"></script>
+    <script>
+        let pLatin = prompt('Lets Play PigLatin, Enter a Word!')
+        let vowels = ('AEIOUaeiou')
+    
+    
+        if(pLatin == ('', ' ')) {
+            document.write('input invalid');
+          
+        } else if(vowels.includes(pLatin[0])) {
+          document.write(pLatin + 'way');
+          
+        } else if(!vowels.includes(pLatin.slice(1))) {
+          let half1 = pLatin[0,1];
+          let half2 = pLatin.slice(-3);
+          document.write(half2 + half1 + 'ay');  
+        } 
+          else {
+            let letter1 = pLatin[0];
+            let half2 = pLatin.slice(1);
+            document.write(half2 + letter1 + 'ay');
+          } 
+      </script>
     
 </body>
 </html>
