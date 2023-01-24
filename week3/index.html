@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+        // convert the grades string into an array 
+        const gradeArray = grades.split(', ');
+        students = 0;
+        gradeCount = 0;
+        for (let i=0; i < gradeArray.length; i++) {
+            studentGrade = gradeArray[i].split('|');
+        for (let i=0; i < studentGrade.length; i++) {
+            studentGrade[i] = studentGrade[i][0].toUpperCase() + studentGrade[i].substring(1);
+        }
+        document.write(studentGrade[0] + " - score: " + studentGrade[1] +"<br>");
+        students = students + 1;
+        gradeCount = gradeCount + parseInt(studentGrade[1]);
+        }
+        const maxScore = Math.max(...studentGrade[1]);
+        const minScore = Math.min(...studentGrade[1]);
+        document.write("Total Students: " + students + "<br>");
+        document.write("Average Score: " + gradeCount/students + "<br>");
+        document.write("Highest Score: " + maxScore + "<br>");
+        document.write("Lowest Score: " + minScore + "<br>");
+    </script>
+</body>
+</html>
