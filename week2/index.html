@@ -18,9 +18,9 @@
         } else if(vowels.includes(pLatin[0])) {
           document.write(pLatin + 'way');
           
-        } else if(!vowels.includes(pLatin.slice(1))) {
-          let half1 = pLatin[0,1];
-          let half2 = pLatin.slice(-3);
+        } else if(!vowels.includes(pLatin[0,1])) {
+          let half1 = pLatin.slice(0,2);
+          let half2 = pLatin.slice(2);
           document.write(half2 + half1 + 'ay');  
         } 
           else {
