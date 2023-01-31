@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname"><br>
+  last name: <input type="text" name="lastname"><br>
+  password: <input type="text" name="password"><br>
+
+  <button >Check</button>
+</form>
+
+<hr><div id="message"></div>
+
+<script>
+
+// add validatePassword function here
+function validatePassword(password) {
+  if(password.length <= 8){
+    $("#message").html("Password must contain at least 8 characters.");
+    return false;
+  }
+  else if(/[A-Z]/.test(password)==false){
+    $("#message").html("Password must contain at least one uppercase character.");
+    return false;
+  }
+  else if(/[a-z]/.test(password)==false){
+    $("#message").html("Password must cantain at least one lowercase character.");
+    return false;
+  }
+  else {
+    $("#message").html("Successfully submitted form");
+    return true;
+  }
+}
+function checkUppercase(str) {
+  return /[A-Z]/.test(str);
+}
+
+const validateForm = (myForm) => {
+
+  var firstname = myForm.firstname.value; // get text of firstname field
+  var lastname = myForm.lastname.value; // get text of lastname field
+  var password = myForm.password.value; // get text of password field
+
+  validatePassword(password);
+  if(firstname == '') {
+    $("#message").html("Please enter a first name.");
+  }
+  else if(lastname == '') {
+    $("#message").html("Please enter a last name.");
+  }
+
+  return false; // prevent page reload
+}
+
+</script>
+
+</body>
+</html>
