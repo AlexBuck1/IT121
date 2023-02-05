@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <link rel="stylesheet" href="../style.css" /> 
+</head>
+    
+<body>
+    
+    <h1>Robo Dealer by Alex Buck</h1>
+
+    <button onclick="dealHand();">Deal Hand</button>
+
+    <hr><div id="card_hand"></div>
+
+    <script>
+        //let hand = [];
+        let suit = ["Clubs", "Diamonds", "Hearts", "Spades"];
+        let value = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
+                
+        let deck = new Array();
+                
+        for (let i = 0; i < value.length; i++) {
+            for (let j = 0; j < suit.length; j++) {
+                let card = {Value: value[i], Suit: suit[j]};
+                deck.push(card);
+            }
+        }
+        
+        function shuffle() {
+            let suit = ["Clubs", "Diamonds", "Hearts", "Spades"];
+            let show = '';
+            let value = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
+                
+            let deck = new Array();
+            for (let i = 0; i < value.length; i++) {
+                for (let j = 0; j < suit.length; j++) {
+                    let card = {Value: value[i], Suit: suit[j]};
+                    deck.push(card);
+                }
+            }
+            return deck;
+        }
+        
+        const dealHand = () => {
+            hand = [];
+            
+            if (deck.length < 7) {
+                deck = shuffle();
+            }
+            
+            else if(deck.length > 5) {
+                for (let i = 0; i < 5; i++) {
+                    let num = Math.floor(Math.random() * deck.length);
+                    hand[i] = deck[num]
+                    deck.splice(num, 1);
+                }
+            }
+                show = `${hand[0].Value} of ${hand[0].Suit} <br> ${hand[1].Value} of ${hand[1].Suit} <br> ${hand[2].Value} of ${hand[2].Suit} <br> ${hand[3].Value} of ${hand[3].Suit} <br> ${hand[4].Value} of ${hand[4].Suit} <br> <b>Good Luck!</b>`;
+            $("#card_hand").html(show);
+            return false; // prevent page reload
+        }
+    </script>
+
+</body>
+</html>
