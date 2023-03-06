@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forcast</title>
+</head>
+<body>
+    <form>
+        <label>Enter a location:</label>
+        <input type="text" id="location" name="location" required/>
+        <button type="submit">Get 5 Day Forecast!</button>
+    </form>
+</br>
+<div id="title"></div>
+    <table width="75%">
+        <tr id="weather">
+        </tr>
+    </table>
+
+    <script>
+        const apiKey = 'a794422a4e6ec30290b20285538f477a';
+
+        function getWeather(location) {
+            if (containsNumeric(location)) {
+                alert("Location cannot contain numbers!");
+            } else { 
+                const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}`;
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.cod !== '200') {
+                            throw new Error(data.message);
+                        }
+
+                        const weatherData = data.list.filter(
+                            (item) => item.dt_txt.includes('12:00:00')
+                        );
+
+                        if (weatherData.length === 0) {
+                            throw new Error('No weather data found. Please try again.');
+                        }
+                        document.getElementById('title').innerHTML=`<h2>${location} 5 Day Weather Forecast</h2> <hr>`;
+
+                        const weatherHTML = weatherData
+                            .map((item) => {
+                                const date = new Date(item.dt_txt);
+                                const icon = `http://openweathermap.org/img/w/${item.weather[0].icon}.png`;
+                                return `
+                                    <td>
+                                        <h2>${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric',})}</h2>
+                                        <img src="${icon}" alt="${item.weather[0].description}" />
+                                        <p>${item.weather[0].description}</p>
+                                        <p>Low: ${converTemp(item.main.temp_min)}&deg;F</p>    
+                                        <p>High: ${converTemp(item.main.temp_max)}&deg;F</p>
+                                        <p>Humidity: ${item.main.humidity}%</p>
+                                    </td>
+                                `;
+                            })
+                            .join('');
+
+                            document.getElementById('weather').innerHTML = weatherHTML;
+                        })
+                        .catch((error) => {
+                        document.getElementById('weather').innerHTML = `<p>${error.message}</p>`;
+                        });
+        }
+      }
+
+      document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const location = document.getElementById('location').value;
+        getWeather(location);
+      });
+      function containsNumeric(str) {
+        return /\d/.test(str);
+      }
+      function converTemp(kTemp) {
+       
+        let fTemp=(((Number(kTemp) - 273.15)*9)/5) + 32;
+        return fTemp.toFixed(2);
+        
+      }
+    </script>
+</body>
+</html>
