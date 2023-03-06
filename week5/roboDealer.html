@@ -2,65 +2,56 @@
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-  <link rel="stylesheet" href="../style.css" /> 
 </head>
-    
 <body>
-    
-    <h1>Robo Dealer by Alex Buck</h1>
 
-    <button onclick="dealHand();">Deal Hand</button>
+<h1>Robo Dealer by Alex</h1>
 
-    <hr><div id="card_hand"></div>
+  <button onclick="dealHand();">Deal Hand</button>
 
-    <script>
-        //let hand = [];
-        let suit = ["Clubs", "Diamonds", "Hearts", "Spades"];
-        let value = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
-                
-        let deck = new Array();
-                
-        for (let i = 0; i < value.length; i++) {
-            for (let j = 0; j < suit.length; j++) {
-                let card = {Value: value[i], Suit: suit[j]};
-                deck.push(card);
-            }
-        }
-        
-        function shuffle() {
-            let suit = ["Clubs", "Diamonds", "Hearts", "Spades"];
-            let show = '';
-            let value = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
-                
-            let deck = new Array();
-            for (let i = 0; i < value.length; i++) {
-                for (let j = 0; j < suit.length; j++) {
-                    let card = {Value: value[i], Suit: suit[j]};
-                    deck.push(card);
-                }
-            }
-            return deck;
-        }
-        
-        const dealHand = () => {
-            hand = [];
-            
-            if (deck.length < 7) {
-                deck = shuffle();
-            }
-            
-            else if(deck.length > 5) {
-                for (let i = 0; i < 5; i++) {
-                    let num = Math.floor(Math.random() * deck.length);
-                    hand[i] = deck[num]
-                    deck.splice(num, 1);
-                }
-            }
-                show = `${hand[0].Value} of ${hand[0].Suit} <br> ${hand[1].Value} of ${hand[1].Suit} <br> ${hand[2].Value} of ${hand[2].Suit} <br> ${hand[3].Value} of ${hand[3].Suit} <br> ${hand[4].Value} of ${hand[4].Suit} <br> <b>Good Luck!</b>`;
-            $("#card_hand").html(show);
-            return false; // prevent page reload
-        }
-    </script>
+<hr><div id="hand"></div>
+
+<script>
+  class Card {
+    constructor(value, suit) {
+      this.value = value;
+      this.suit = suit;
+    }
+  }
+
+  // Deck array
+  const deck = [];
+  const suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs'];
+  const values = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King', 'Ace'];
+
+  for (let suit of suits) {
+    for (let value of values) {
+      deck.push(new Card(value, suit));
+    }
+  }
+
+  // Create a function to randomly select five cards from the deck of 52
+  const shuffle = () => {
+    const hand = [];
+    for (let i = 0; i< 5; i++) {
+      const randomHand = Math.floor(Math.random() * 52);
+      hand.push(deck[randomHand]);
+    }
+    return hand;
+  }
+
+  // show the five random cards that were selected
+const dealHand = () => {
+/* code to deal a card hand goes here */
+  const hand = shuffle();
+  const showHand = document.getElementById('hand');
+  showHand.innerHTML = '';
+  for (let card of hand) {
+    showHand.innerHTML += `${card.value} of ${card.suit} <br>`;
+  }
+}
+
+</script>
 
 </body>
 </html>
