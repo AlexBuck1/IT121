@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Drawings with Javascript</title>
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+  <body>
+      <h1>Bubbles in a Box!!!</h1>
+    <canvas id="myCanvas" width="1200" height="600"></canvas>
+
+    <script>
+      let canvas = document.getElementById("myCanvas");
+      let context = canvas.getContext("2d");
+
+      let bubble1 = {
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        vx: 5,
+        vy: 2,
+        radius: 50,
+        color: "darkgrey",
+      };
+      let bubble2 = {
+        x: canvas.width / 3,
+        y: canvas.height / 3,
+        vx: 3,
+        vy: 4,
+        radius: 30,
+        color: "lightgrey",
+      };
+
+      let bubble3 = {
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        vx: 1,
+        vy: 7,
+        radius: 40,
+        color: "grey",
+      };
+      let bubble4 = {
+        x: canvas.width / 3,
+        y: canvas.height / 3,
+        vx: 6,
+        vy: 8,
+        radius: 60,
+        color: "black",
+      };
+
+      function animate() {
+        context.save();
+
+        // Clear the canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw the random line
+        context.beginPath();
+        context.moveTo(0, canvas.width / 2);
+        context.lineTo(canvas.height, canvas.width / 4);
+        context.strokeStyle = "navy";
+        context.stroke();
+
+        // Draw the rectangle
+        context.fillStyle = "aqua";
+        context.fillRect(
+          canvas.width / 4,
+          canvas.height / 4,
+          canvas.width / 2,
+          canvas.height / 2
+        );
+
+        // Draw bubbles on the canvas
+        context.beginPath();
+        context.arc(bubble1.x, bubble1.y, bubble1.radius, 0, Math.PI * 2);
+        context.fillStyle = bubble1.color;
+        context.fill();
+        context.closePath();
+
+        context.beginPath();
+        context.arc(bubble2.x, bubble2.y, bubble2.radius, 0, Math.PI * 2);
+        context.fillStyle = bubble2.color;
+        context.fill();
+        context.closePath();
+
+        context.beginPath();
+        context.arc(bubble3.x, bubble3.y, bubble3.radius, 0, Math.PI * 2);
+        context.fillStyle = bubble3.color;
+        context.fill();
+        context.closePath();
+
+        context.beginPath();
+        context.arc(bubble4.x, bubble4.y, bubble4.radius, 0, Math.PI * 2);
+        context.fillStyle = bubble4.color;
+        context.fill();
+        context.closePath();
+
+        context.restore();
+
+
+        bubble1.x += bubble1.vx;
+        bubble1.y += bubble1.vy;
+        bubble2.x += bubble2.vx;
+        bubble2.y += bubble2.vy;
+        bubble3.x += bubble3.vx;
+        bubble3.y += bubble3.vy;
+        bubble4.x += bubble4.vx;
+        bubble4.y += bubble4.vy;
+
+
+        // bubbles bounce around the box
+        if (
+          bubble1.x + bubble1.radius > canvas.width ||
+          bubble1.x - bubble1.radius < 0
+        ) {
+          bubble1.vx = -bubble1.vx;
+        }
+        if (
+          bubble1.y + bubble1.radius > canvas.height ||
+          bubble1.y - bubble1.radius < 0
+        ) {
+          bubble1.vy = -bubble1.vy;
+        }
+        if (
+          bubble2.x + bubble2.radius > canvas.width ||
+          bubble2.x - bubble2.radius < 0
+        ) {
+          bubble2.vx = -bubble2.vx;
+        }
+        if (
+          bubble2.y + bubble2.radius > canvas.height ||
+          bubble2.y - bubble2.radius < 0
+        ) {
+          bubble2.vy = -bubble2.vy;
+        }
+        if (
+          bubble3.x + bubble3.radius > canvas.width ||
+          bubble3.x - bubble3.radius < 0
+        ) {
+          bubble3.vx = -bubble3.vx;
+        }
+        if (
+          bubble3.y + bubble3.radius > canvas.height ||
+          bubble3.y - bubble3.radius < 0
+        ) {
+          bubble3.vy = -bubble3.vy;
+        }
+        if (
+          bubble4.x + bubble4.radius > canvas.width ||
+          bubble4.x - bubble4.radius < 0
+        ) {
+          bubble4.vx = -bubble4.vx;
+        }
+        if (
+          bubble4.y + bubble4.radius > canvas.height ||
+          bubble4.y - bubble4.radius < 0
+        ) {
+          bubble4.vy = -bubble4.vy;
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
